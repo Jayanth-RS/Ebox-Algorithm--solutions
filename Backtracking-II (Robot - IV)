@@ -1,0 +1,66 @@
+Imagine a robot sitting on the upper left hand corner of an NxN grid. 
+The robot can only move in three directions: right , down and diagonally down. 
+The robot has to reach the lower right hand corner of the NxN grid. 
+Write a program to determine the number of possible paths for the robot.
+Sample Input and Output:
+Enter the size of the grid
+3
+The paths for the robot are
+( 0 , 0 ) - ( 1 , 0 ) - ( 2 , 0 ) - ( 2 , 1 ) - ( 2 , 2 )
+( 0 , 0 ) - ( 1 , 0 ) - ( 1 , 1 ) - ( 2 , 1 ) - ( 2 , 2 )
+( 0 , 0 ) - ( 1 , 0 ) - ( 1 , 1 ) - ( 1 , 2 ) - ( 2 , 2 )
+( 0 , 0 ) - ( 1 , 0 ) - ( 1 , 1 ) - ( 2 , 2 )
+( 0 , 0 ) - ( 1 , 0 ) - ( 2 , 1 ) - ( 2 , 2 )
+( 0 , 0 ) - ( 0 , 1 ) - ( 1 , 1 ) - ( 2 , 1 ) - ( 2 , 2 )
+( 0 , 0 ) - ( 0 , 1 ) - ( 1 , 1 ) - ( 1 , 2 ) - ( 2 , 2 )
+( 0 , 0 ) - ( 0 , 1 ) - ( 1 , 1 ) - ( 2 , 2 )
+( 0 , 0 ) - ( 0 , 1 ) - ( 0 , 2 ) - ( 1 , 2 ) - ( 2 , 2 )
+( 0 , 0 ) - ( 0 , 1 ) - ( 1 , 2 ) - ( 2 , 2 )
+( 0 , 0 ) - ( 1 , 1 ) - ( 2 , 1 ) - ( 2 , 2 )
+( 0 , 0 ) - ( 1 , 1 ) - ( 1 , 2 ) - ( 2 , 2 )
+( 0 , 0 ) - ( 1 , 1 ) - ( 2 , 2 )
+
+SOLUTION:
+
+#include<stdio.h>
+struct path{
+    int x,y;
+}p[50];
+void robo(int n,int i,int j,int index)
+{
+    int k;
+    if(i>=n||j>=n)
+    return ;
+    else if(i==n-1 && j==n-1)
+    {
+     p[index].x=i;
+     p[index].y=j;
+     for(k=0;k<=index;k++)
+     {
+         if(k==index)
+         printf("( %d , %d )\n",p[k].x,p[k].y);
+         else
+         printf("( %d , %d ) - ",p[k].x,p[k].y);
+     }
+     return;
+    }
+    else
+    {
+        p[index].x=i;
+        p[index].y=j;
+        robo(n,i+1,j,index+1);
+        robo(n,i,j+1,index+1);
+       robo(n,i+1,j+1,index+1);
+    }
+}
+int main()
+{
+	int n;
+	printf("Enter the size of the grid\n");
+	scanf("%d",&n);
+	printf("The paths for the robot are\n");
+	robo(n,0,0,0);
+	return 0;
+}
+
+
